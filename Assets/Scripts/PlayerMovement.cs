@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     Quaternion oldRotation;
 
-    float weaponSwayAmount = 3;
+    float weaponSwayAmount = 400;
     float slideVelocity = 5;
 
     Rigidbody rigidbody;
@@ -50,28 +50,17 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
 
         weapon = GameObject.Find("Weapon");
-        oldRotation = weapon.transform.rotation;
+        oldRotation = weapon.transform.localRotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(rigidbody.velocity);
 
-        //Quaternion desiredRotation = weapon.transform.rotation * Quaternion.Inverse(oldRotation);
-
-        //Quaternion deltaRotation = desiredRotation.normalized;
-
-        //weapon.transform.rotation *= new Quaternion(weapon.transform.rotation.x, deltaRotation.y * mouseX, weapon.transform.rotation.z, weapon.transform.rotation.w);
-
-        //if(weapon.transform.rotation.y < -0.8)
-        //{
-        //    weapon.transform.rotation = new Quaternion(weapon.transform.rotation.x, 0.8f, weapon.transform.rotation.z, weapon.transform.rotation.w); ;
-        //}
 
         //Debug.Log(weapon.transform.rotation);
 
-        //oldRotation = weapon.transform.rotation;
+        
 
         if (!(inputVector.magnitude > 0)) moveDirection = Vector3.zero;
         moveDirection = transform.forward * inputVector.y + transform.right * inputVector.x;
@@ -120,5 +109,19 @@ public class PlayerMovement : MonoBehaviour
 
         Camera.main.transform.localRotation = Quaternion.Euler(XRotation, 0.0f, 0.0f);
         playerTransform.Rotate(Vector3.up * mouseX);
+
+        Quaternion desiredRotation = weapon.transform.rotation * Quaternion.Inverse(oldRotation);
+
+        Quaternion deltaRotation = desiredRotation.normalized;
+
+        //Debug.Log(deltaRotation.y);
+
+        weapon.transform.localRotation = Quaternion.Euler(Vector3.Lerp(
+            new Vector3(weapon.transform.rotation.x, weapon.transform.rotation.y, weapon.transform.rotation.z), 
+            new Vector3(weapon.transform.rotation.x, deltaRotation.y * weaponSwayAmount, weapon.transform.rotation.z), 1f));
+
+
+
+        oldRotation = weapon.transform.rotation;
     }
 }
