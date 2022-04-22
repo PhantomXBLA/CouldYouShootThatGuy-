@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelWinCheck : MonoBehaviour
 {
@@ -29,7 +30,13 @@ public class LevelWinCheck : MonoBehaviour
             Debug.Log("yes");
 
             timer.timerStop = true;
-            
+
+            switch (SceneManager.GetActiveScene().buildIndex)
+            {
+                case 1:
+                    break;
+            }
+
         }
     }
 }
