@@ -42,7 +42,7 @@ public class GunController : MonoBehaviour
         {
             fireSound.Play();
 
-            //rigidbody.AddForce(new Vector3(0, 0, mainCamera.transform.position.z - 1), ForceMode.Impulse);
+           //rigidbody.AddForce(new Vector3(0, 0, -1), ForceMode.Impulse);
 
             Ray screenRay = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 

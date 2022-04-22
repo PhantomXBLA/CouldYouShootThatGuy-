@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float runSpeed = 10;
     [SerializeField]
-    float jumpForce = 5;
+    float jumpForce = 1f;
+
+    float maxVelocity = 6.25f;
 
     float mouseX;
     float mouseY;
@@ -21,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection = Vector3.zero;
     Vector2 lookInput = Vector2.zero;
     Vector2 inputVector = Vector2.zero;
+
+    bool isJumping = false;
 
     public float aimSensitivity = 0.05f;
     private float XRotation = 0.0f;
@@ -36,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rigidbody;
     CapsuleCollider capsuleCollider;
+
+    float capsuleCrouchHeight = 1;
+    float capsuleHeight = 2;
 
 
 
@@ -58,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
 
-        //Debug.Log(weapon.transform.rotation);
+        Debug.Log(rigidbody.velocity.magnitude);
 
         
 
@@ -67,19 +75,24 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 movementDirection = moveDirection * (walkSpeed * Time.deltaTime);
         transform.position += movementDirection;
+
+        if(rigidbody.velocity.magnitude > maxVelocity)
+        {
+            rigidbody.velocity = Vector3.ClampMagnitude(rigidbody.velocity, maxVelocity);
+        }
     }
 
     public void OnSlide(InputValue value)
     {
-        if (value.isPressed)
+        if (value.isPressed && !isJumping)
         {
-            capsuleCollider.height /= 2;
-            rigidbody.AddForce(transform.forward * 5, ForceMode.VelocityChange);
+            capsuleCollider.height = capsuleCrouchHeight;
+            rigidbody.AddForce(transform.forward * slideVelocity, ForceMode.VelocityChange);
         }
 
         if (!value.isPressed)
         {
-            capsuleCollider.height *= 2;
+            capsuleCollider.height = capsuleHeight;
         }
 
 
@@ -92,6 +105,11 @@ public class PlayerMovement : MonoBehaviour
         weapon.GetComponent<GunController>().Shoot();
 
         Debug.Log("click");
+    }
+
+    public void OnRestartLevel()
+    {
+        SceneManager.LoadScene("0");
     }
 
     public void OnMovement(InputValue value)
@@ -114,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
 
         Quaternion deltaRotation = desiredRotation.normalized;
 
-        //Debug.Log(deltaRotation.y);
+
 
         weapon.transform.localRotation = Quaternion.Euler(Vector3.Lerp(
             new Vector3(weapon.transform.rotation.x, weapon.transform.rotation.y, weapon.transform.rotation.z), 
@@ -123,5 +141,29 @@ public class PlayerMovement : MonoBehaviour
 
 
         oldRotation = weapon.transform.rotation;
+    }
+
+    public void OnJump(InputValue value)
+    {
+        if (!isJumping)
+        {
+
+            rigidbody.AddForce((transform.up + moveDirection) * jumpForce, ForceMode.Impulse);
+            isJumping = true;
+
+            //if (capsuleCollider.height != capsuleHeight)
+            //{
+            //    capsuleCollider.height = capsuleHeight;
+            //}
+
+        }
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Ground") && !isJumping) return;
+
+        isJumping = false;
     }
 }
