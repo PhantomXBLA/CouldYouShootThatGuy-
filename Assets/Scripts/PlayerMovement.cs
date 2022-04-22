@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
 
-        Debug.Log(rigidbody.velocity.magnitude);
+        //Debug.Log(rigidbody.velocity.magnitude);
 
         
 
@@ -104,12 +104,12 @@ public class PlayerMovement : MonoBehaviour
     {
         weapon.GetComponent<GunController>().Shoot();
 
-        Debug.Log("click");
+        //Debug.Log("click");
     }
 
     public void OnRestartLevel()
     {
-        SceneManager.LoadScene("0");
+        SceneManager.LoadScene(0);
     }
 
     public void OnMovement(InputValue value)
