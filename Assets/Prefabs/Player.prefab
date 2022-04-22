@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 714832615}
   - component: {fileID: 714832617}
   - component: {fileID: 714832618}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec4a270915f62b644803b4a379ca5241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timerStop: 0
 --- !u!82 &714832618
 AudioSource:
   m_ObjectHideFlags: 0
@@ -256,7 +257,7 @@ GameObject:
   - component: {fileID: 1462871693}
   - component: {fileID: 1462871692}
   - component: {fileID: 1462871691}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: WeaponCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +357,7 @@ GameObject:
   - component: {fileID: 1647096936}
   - component: {fileID: 1647096938}
   - component: {fileID: 1647096937}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: AmmoCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +380,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.003, y: 0.064}
+  m_AnchoredPosition: {x: 0, y: 0.064}
   m_SizeDelta: {x: 0.1, y: 0.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1647096938
@@ -492,9 +493,9 @@ GameObject:
   - component: {fileID: 424348084676954011}
   - component: {fileID: 424348084676954012}
   - component: {fileID: 424348084676954010}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -529,7 +530,7 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 10
   jumpForce: 5
-  aimSensitivity: 0.5
+  aimSensitivity: 0.3
   weapon: {fileID: 0}
 --- !u!54 &424348084676954011
 Rigidbody:
@@ -684,7 +685,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4513178125415863117}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sliderelease_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -718,7 +719,8 @@ GameObject:
   - component: {fileID: 3335188603399178353}
   - component: {fileID: 3335188603399178351}
   - component: {fileID: 3335188603399178352}
-  m_Layer: 0
+  - component: {fileID: 1884936347}
+  m_Layer: 8
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -767,7 +769,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c42eb4920eca0074ea6bb35fdc0ff923, type: 3}
+  m_audioClip: {fileID: 8300000, guid: cbe7b7261558146408673ca0708696b7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.25
   m_Pitch: 1
@@ -900,6 +902,25 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerActionMap
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!95 &1884936347
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3146729748670225689}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 35a1154de5fdfa9499f52ada6654f3d1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3571867362627804370
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +930,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7212559863480516442}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -942,7 +963,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5330351673501490088}
   - component: {fileID: 2857125663551088528}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1041,7 +1062,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3040220032721908790}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bullets_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1071,7 +1092,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6651935356713113405}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1103,7 +1124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6926703097095652793}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1134,7 +1155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6246556525714180421}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: slide_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1164,7 +1185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8392815553213006993}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1195,7 +1216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2986816418993658125}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1229,7 +1250,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8838994057296903413}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1260,7 +1281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 728558096836143655}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sliderelease
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1291,7 +1312,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7023282608259446300}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bullets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1322,7 +1343,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4995884722146337688}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: barrel_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1352,7 +1373,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7369049214956930036}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bullet_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}

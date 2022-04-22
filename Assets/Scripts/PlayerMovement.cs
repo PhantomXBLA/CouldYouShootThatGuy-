@@ -109,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnRestartLevel()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void OnMovement(InputValue value)
