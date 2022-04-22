@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GunController : MonoBehaviour
 {
@@ -74,9 +75,18 @@ public class GunController : MonoBehaviour
                 if(hit.transform.gameObject.tag == "Enemy")
                 {
 
+
+
                     Instantiate(brokenEnemy, hit.transform.position, hit.transform.rotation);
                     hit.transform.gameObject.SetActive(false);
                     leveWinCheck.enemiesKilled++;
+
+                    if (SceneManager.GetActiveScene().buildIndex == 1)
+                    {
+                        Level1GameManager level1GameManager = GameObject.Find("GameManager").GetComponent<Level1GameManager>();
+
+                        level1GameManager.enemyShot();
+                    }
 
                 }
 
@@ -90,6 +100,13 @@ public class GunController : MonoBehaviour
                     Instantiate(brokenEnemy, hit.transform.position, hit.transform.rotation);
                     hit.transform.parent.gameObject.SetActive(false);
                     leveWinCheck.enemiesKilled++;
+
+                    if (SceneManager.GetActiveScene().buildIndex == 1)
+                    {
+                        Level1GameManager level1GameManager = GameObject.Find("GameManager").GetComponent<Level1GameManager>();
+
+                        level1GameManager.enemyShot();
+                    }
 
                     Invoke("returnToNormal", .2f);
 

@@ -19,6 +19,11 @@ public class PlayerMovement : MonoBehaviour
     float mouseX;
     float mouseY;
 
+    bool paused = false;
+    Canvas pauseCanvas;
+
+    AudioSource levelMusic;
+
     //public float aimSensitivity = 0.05f;
 
     Vector3 moveDirection = Vector3.zero;
@@ -59,6 +64,13 @@ public class PlayerMovement : MonoBehaviour
 
         weapon = GameObject.Find("Weapon");
         oldRotation = weapon.transform.localRotation;
+
+        pauseCanvas = GameObject.Find("PauseCanvas").GetComponent<Canvas>();
+        pauseCanvas.enabled = false;
+
+        levelMusic = GameObject.Find("LevelMusic").GetComponent<AudioSource>();
+
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -102,7 +114,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnFire()
     {
-        weapon.GetComponent<GunController>().Shoot();
+        if (!paused)
+        {
+            weapon.GetComponent<GunController>().Shoot();
+        }
+
+
 
         //Debug.Log("click");
     }
@@ -117,30 +134,35 @@ public class PlayerMovement : MonoBehaviour
         inputVector = value.Get<Vector2>();
     }
 
-        public void OnLook(InputValue value)
+    public void OnLook(InputValue value)
     {
-        mouseX = value.Get<Vector2>().x * aimSensitivity;
-        mouseY = value.Get<Vector2>().y * aimSensitivity;
+        if (!paused)
+        {
+            mouseX = value.Get<Vector2>().x * aimSensitivity;
+            mouseY = value.Get<Vector2>().y * aimSensitivity;
 
-        XRotation -= mouseY;
-        XRotation = Mathf.Clamp(XRotation, -90.0f, 90.0f);
+            XRotation -= mouseY;
+            XRotation = Mathf.Clamp(XRotation, -90.0f, 90.0f);
 
-        Camera.main.transform.localRotation = Quaternion.Euler(XRotation, 0.0f, 0.0f);
-        playerTransform.Rotate(Vector3.up * mouseX);
+            Camera.main.transform.localRotation = Quaternion.Euler(XRotation, 0.0f, 0.0f);
+            playerTransform.Rotate(Vector3.up * mouseX);
 
-        Quaternion desiredRotation = weapon.transform.rotation * Quaternion.Inverse(oldRotation);
+            Quaternion desiredRotation = weapon.transform.rotation * Quaternion.Inverse(oldRotation);
 
-        Quaternion deltaRotation = desiredRotation.normalized;
-
-
-
-        weapon.transform.localRotation = Quaternion.Euler(Vector3.Lerp(
-            new Vector3(weapon.transform.rotation.x, weapon.transform.rotation.y, weapon.transform.rotation.z), 
-            new Vector3(weapon.transform.rotation.x, deltaRotation.y * weaponSwayAmount, weapon.transform.rotation.z), 1f));
+            Quaternion deltaRotation = desiredRotation.normalized;
 
 
 
-        oldRotation = weapon.transform.rotation;
+            weapon.transform.localRotation = Quaternion.Euler(Vector3.Lerp(
+                new Vector3(weapon.transform.rotation.x, weapon.transform.rotation.y, weapon.transform.rotation.z),
+                new Vector3(weapon.transform.rotation.x, deltaRotation.y * weaponSwayAmount, weapon.transform.rotation.z), 1f));
+
+
+
+            oldRotation = weapon.transform.rotation;
+        }
+
+        
     }
 
     public void OnJump(InputValue value)
@@ -158,6 +180,24 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
+    }
+
+    public void OnPause()
+    {
+        if (!paused)
+        {
+            pauseCanvas.enabled = true;
+            Time.timeScale = 0;
+            paused = true;
+            levelMusic.Pause();
+        }
+        else
+        {
+            pauseCanvas.enabled = false;
+            Time.timeScale = 1;
+            paused = false;
+            levelMusic.UnPause();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

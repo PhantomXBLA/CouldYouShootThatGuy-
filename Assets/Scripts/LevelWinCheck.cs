@@ -34,7 +34,12 @@ public class LevelWinCheck : MonoBehaviour
             switch (SceneManager.GetActiveScene().buildIndex)
             {
                 case 1:
+                    SceneManager.LoadScene(2);
                     break;
+                case 2:
+                    SceneManager.LoadScene(3);
+                    break;
+
             }
 
         }
