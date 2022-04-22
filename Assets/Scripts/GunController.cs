@@ -10,6 +10,9 @@ public class GunController : MonoBehaviour
     Rigidbody rigidbody;
     TextMeshProUGUI ammoLabel;
 
+    Animator weaponAnimator;
+    Animation fireAnimation;
+
     public LayerMask layers;
 
     public GameObject brokenEnemy;
@@ -28,6 +31,9 @@ public class GunController : MonoBehaviour
         weapon = GameObject.Find("Weapon");
         mainCamera = Camera.main;
         rigidbody = GetComponent<Rigidbody>();
+        weaponAnimator = GetComponent<Animator>();
+        fireAnimation = GetComponent<Animation>();
+
         playerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody>();
         ammoLabel = GameObject.Find("AmmoCount").GetComponent<TextMeshProUGUI>();
 
@@ -50,8 +56,11 @@ public class GunController : MonoBehaviour
         if(currentAmmo > 0)
         {
             fireSound.Play();
+            //weaponAnimator.SetBool("weaponFiring", true);
+            weaponAnimator.Play("Fire");
+            //Invoke("resetAnimState", .01f);
 
-           //rigidbody.AddForce(new Vector3(0, 0, -1), ForceMode.Impulse);
+            //rigidbody.AddForce(new Vector3(0, 0, -1), ForceMode.Impulse);
 
             Ray screenRay = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
@@ -103,6 +112,11 @@ public class GunController : MonoBehaviour
         fireSound.pitch = Time.timeScale;
         levelAudio.pitch = Time.timeScale;
         playerRigidbody.interpolation = RigidbodyInterpolation.None;
+    }
+
+    void resetAnimState()
+    {
+        weaponAnimator.SetBool("weaponFiring", false);
     }
 
 }
