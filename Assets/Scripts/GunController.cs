@@ -11,7 +11,6 @@ public class GunController : MonoBehaviour
     TextMeshProUGUI ammoLabel;
 
     Animator weaponAnimator;
-    Animation fireAnimation;
 
     public LayerMask layers;
 
@@ -23,6 +22,8 @@ public class GunController : MonoBehaviour
 
     Rigidbody playerRigidbody;
 
+    LevelWinCheck leveWinCheck;
+
 
     public AudioSource fireSound;
     // Start is called before the first frame update
@@ -32,12 +33,12 @@ public class GunController : MonoBehaviour
         mainCamera = Camera.main;
         rigidbody = GetComponent<Rigidbody>();
         weaponAnimator = GetComponent<Animator>();
-        fireAnimation = GetComponent<Animation>();
 
         playerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody>();
         ammoLabel = GameObject.Find("AmmoCount").GetComponent<TextMeshProUGUI>();
 
         levelAudio = GameObject.Find("LevelMusic").GetComponent<AudioSource>();
+        leveWinCheck = GameObject.Find("WinPlatform").GetComponent<LevelWinCheck>();
 
         currentAmmo = magazineSizeMax;
         ammoLabel.text = currentAmmo.ToString();
@@ -72,15 +73,10 @@ public class GunController : MonoBehaviour
 
                 if(hit.transform.gameObject.tag == "Enemy")
                 {
-                    //Debug.Log(hit.transform.gameObject);
-                    //Time.timeScale = 0.1f;
-                    //fireSound.pitch = Time.timeScale * 3;
-                    //levelAudio.pitch = Time.timeScale * 6;
-                    //playerRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+
                     Instantiate(brokenEnemy, hit.transform.position, hit.transform.rotation);
                     hit.transform.gameObject.SetActive(false);
-
-                    //Invoke("returnToNormal", .2f);
+                    leveWinCheck.enemiesKilled++;
 
                 }
 
@@ -93,6 +89,7 @@ public class GunController : MonoBehaviour
                     playerRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
                     Instantiate(brokenEnemy, hit.transform.position, hit.transform.rotation);
                     hit.transform.parent.gameObject.SetActive(false);
+                    leveWinCheck.enemiesKilled++;
 
                     Invoke("returnToNormal", .2f);
 

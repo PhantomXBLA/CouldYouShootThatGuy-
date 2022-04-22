@@ -9,7 +9,8 @@ public class Timer : MonoBehaviour
     float timeLimit = 10;
     AudioSource timerSound;
     float pitch = 1;
-    
+
+    public bool timerStop = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,19 +29,23 @@ public class Timer : MonoBehaviour
 
     void countdown()
     {
-        timerSound.pitch = pitch;
-        timeLimit -= 1;
-        timerLabel.text = timeLimit.ToString("F0");
-
-        if(timeLimit == 0)
+        if (!timerStop)
         {
-            //timeLimit = 0;
-            CancelInvoke("countdown");
-            CancelInvoke("flashCountdown");
-            endGame();
+            timerSound.pitch = pitch;
+            timeLimit -= 1;
+            timerLabel.text = timeLimit.ToString("F0");
+
+            if (timeLimit == 0 || timerStop)
+            {
+                //timeLimit = 0;
+                CancelInvoke("countdown");
+                CancelInvoke("flashCountdown");
+                endGame();
+            }
+            //timerSound.Play();
+            pitch += 0.025f;
         }
-        //timerSound.Play();
-        pitch += 0.025f;
+
     }
 
     void flashCountdown()
