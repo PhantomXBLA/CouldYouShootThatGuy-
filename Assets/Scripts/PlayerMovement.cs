@@ -62,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
 
+        if (PlayerPrefs.HasKey("Sensitivity"))
+        {
+            aimSensitivity = PlayerPrefs.GetFloat("Sensitivity");
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
