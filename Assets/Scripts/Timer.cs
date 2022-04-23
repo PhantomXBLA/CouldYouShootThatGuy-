@@ -9,6 +9,7 @@ public class Timer : MonoBehaviour
     float timeLimit = 10;
     AudioSource timerSound;
     float pitch = 1;
+    PlayerMovement playerController;
 
     public bool timerStop = false;
     // Start is called before the first frame update
@@ -16,6 +17,7 @@ public class Timer : MonoBehaviour
     {
         timerLabel = GetComponent<TextMeshProUGUI>();
         timerSound = GetComponent<AudioSource>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerMovement>();
 
         InvokeRepeating("countdown", 1, 1);
         InvokeRepeating("flashCountdown", 1, 0.5f);
@@ -35,7 +37,7 @@ public class Timer : MonoBehaviour
             timeLimit -= 1;
             timerLabel.text = timeLimit.ToString("F0");
 
-            if (timeLimit == 0 || timerStop)
+            if (timeLimit == 0)
             {
                 //timeLimit = 0;
                 CancelInvoke("countdown");
@@ -57,5 +59,6 @@ public class Timer : MonoBehaviour
     void endGame()
     {
         Debug.Log("Game Over!");
+        playerController.GameOver();
     }
 }

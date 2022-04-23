@@ -26,4 +26,9 @@ public class ButtonController : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void MainMenuButtonPressed()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

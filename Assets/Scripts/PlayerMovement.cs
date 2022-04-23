@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     bool paused = false;
     Canvas pauseCanvas;
 
+    Canvas gameOverCanvas;
+
     AudioSource levelMusic;
 
     //public float aimSensitivity = 0.05f;
@@ -31,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 inputVector = Vector2.zero;
 
     bool isJumping = false;
+    bool gameOver = false;
 
     public float aimSensitivity = 0.05f;
     private float XRotation = 0.0f;
@@ -66,7 +69,9 @@ public class PlayerMovement : MonoBehaviour
         oldRotation = weapon.transform.localRotation;
 
         pauseCanvas = GameObject.Find("PauseCanvas").GetComponent<Canvas>();
+        gameOverCanvas = GameObject.Find("GameOverCanvas").GetComponent<Canvas>();
         pauseCanvas.enabled = false;
+        gameOverCanvas.enabled = false;
 
         levelMusic = GameObject.Find("LevelMusic").GetComponent<AudioSource>();
 
@@ -184,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnPause()
     {
-        if (!paused)
+        if (!paused && !gameOver)
         {
             pauseCanvas.enabled = true;
             Time.timeScale = 0;
@@ -197,6 +202,16 @@ public class PlayerMovement : MonoBehaviour
             Time.timeScale = 1;
             paused = false;
             levelMusic.UnPause();
+        }
+    }
+
+    public void GameOver()
+    {
+        if (!gameOver)
+        {
+            gameOverCanvas.enabled = true;
+            Time.timeScale = 0;
+            gameOver = true;
         }
     }
 
